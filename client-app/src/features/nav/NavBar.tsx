@@ -4,7 +4,7 @@ import { Button, Container, Menu } from "semantic-ui-react";
 interface IProps {
   openCreateForm: () => void;
 }
-export const NavBar: React.FC<IProps>= ({openCreateForm}) => {
+const NavBar: React.FC<IProps>= ({openCreateForm}) => {
   return (
     <Menu fixed="top" inverted>
       <Container>
@@ -12,9 +12,9 @@ export const NavBar: React.FC<IProps>= ({openCreateForm}) => {
             <img src="/assets/logo.png" alt="logo" style={{marginRight: 10}}/>  
             Reactivities
         </Menu.Item> 
-        <Menu.Item name="messages" />
+        <Menu.Item name="Activities" />
         <Menu.Item>
-            <Button onClick={openCreateForm} positive content="Create Activity">Create Activity </Button>
+            <Button onClick={openCreateForm} positive content="Create Activity"/>
         </Menu.Item>
       </Container>
     </Menu>

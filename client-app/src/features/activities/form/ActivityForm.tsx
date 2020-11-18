@@ -5,7 +5,7 @@ import {v4 as uuid} from 'uuid';
 interface IProps {
   setEditMode: (editMode: boolean) => void;
   activity: IActivity;
-  
+  submitting: boolean;
   createActivity: (activity: IActivity) => void;
   editActivity: (activity: IActivity) => void;
 }
@@ -13,7 +13,8 @@ export const ActivityForm: React.FC<IProps> = ({
   setEditMode,
   activity: initialFormState,
   createActivity,
-  editActivity
+  editActivity,
+  submitting
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
@@ -93,7 +94,7 @@ export const ActivityForm: React.FC<IProps> = ({
           value={activity.venue}
         />
         <Button
-          o
+          loading={submitting}
           floated="right"
           positive
           type="submit"
