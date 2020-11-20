@@ -8,7 +8,6 @@ import ActivityStore from '../stores/activityStore';
 import { observer } from "mobx-react-lite";
 const App = () => {
   const activityStore = useContext(ActivityStore);
-  
   useEffect(() => {
     activityStore.loadActivities();
   }, [activityStore]);

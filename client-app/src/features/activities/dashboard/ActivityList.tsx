@@ -3,9 +3,9 @@ import React, { useContext } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import  ActivityStore  from "../../../app/stores/activityStore";
 
-export const ActivityList: React.FC = () => {
+const ActivityList: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const {activitiesByDate, selectActivity, deleteActivity, submitting, target} = activityStore;
+  const {activitiesByDate, selectActivity, deleteActivity,submitting, target} = activityStore;
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -34,7 +34,7 @@ export const ActivityList: React.FC = () => {
                   floated="right"
                   content="Delete"
                   color="red"
-                ></Button>
+        ></Button>
                 <Label basic content={activity.category} />
               </Item.Extra>
             </Item.Content>

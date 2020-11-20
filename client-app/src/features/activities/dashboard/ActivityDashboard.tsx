@@ -2,9 +2,9 @@ import { observer } from "mobx-react-lite";
 import React, { SyntheticEvent, useContext } from "react";
 import { Grid } from "semantic-ui-react";
 import  ActivityStore  from "../../../app/stores/activityStore";
-import { ActivityForm } from "../form/ActivityForm";
-import { ActivityDetails } from "./ActivityDetails";
-import { ActivityList } from "./ActivityList";
+import  ActivityForm  from "../form/ActivityForm";
+import  ActivityDetails  from "./ActivityDetails";
+import  ActivityList  from "./ActivityList";
 
 
 export const ActivityDashboard: React.FC= () => {

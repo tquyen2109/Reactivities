@@ -40,8 +40,9 @@ export class ActivityStore {
     this.editMode = false;
   };
   @action createActivity = async (activity: IActivity) => {
-    this.submitting = true;
+    
     try {
+      this.submitting = true;
       await agent.Activities.create(activity);
       this.activityRegistry.set(activity.id, activity);
       this.editMode = false;
@@ -57,7 +58,7 @@ export class ActivityStore {
   };
   @action editActivity = async (activity: IActivity) => {
     this.submitting = true;
-    try {
+    try {    
       await agent.Activities.update(activity);
       this.activityRegistry.set(activity.id, activity);
       this.selectedActivity = activity;

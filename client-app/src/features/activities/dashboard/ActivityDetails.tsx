@@ -3,8 +3,7 @@ import React, { useContext } from "react";
 import { Button, Card, Image } from "semantic-ui-react";
 import ActivityStore  from "../../../app/stores/activityStore";
 
-export const ActivityDetails: React.FC = ({
-}) => {
+const ActivityDetails: React.FC = () => {
   const activityStore = useContext(ActivityStore)
   const {selectedActivity: activity,openEditForm, cancelSelectedActivity} = activityStore;
   return (
