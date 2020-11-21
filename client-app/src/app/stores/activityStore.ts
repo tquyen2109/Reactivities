@@ -8,7 +8,7 @@ export class ActivityStore {
   @observable activityRegistry = new Map();
   @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
-  @observable selectedActivity: IActivity | undefined;
+  @observable activity: IActivity | null = null;
   @observable editMode = false;
   @observable submitting = false;
   @observable target = "";
@@ -43,7 +43,7 @@ export class ActivityStore {
   };
 
   @action selectActivity = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id);
+    this.activity = this.activityRegistry.get(id);
     this.editMode = false;
   };
   @action createActivity = async (activity: IActivity) => {
@@ -66,7 +66,7 @@ export class ActivityStore {
   };
   @action openCreateForm = () => {
     this.editMode = true;
-    this.selectedActivity = undefined;
+    this.activity= null;
   };
   @action editActivity = async (activity: IActivity) => {
     this.submitting = true;
@@ -74,7 +74,7 @@ export class ActivityStore {
       await agent.Activities.update(activity);
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
-        this.selectedActivity = activity;
+        this.activity = activity;
         this.editMode = false;
         this.submitting = false;
       })
@@ -87,11 +87,11 @@ export class ActivityStore {
     }
   };
   @action openEditForm = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id);
+    this.activity = this.activityRegistry.get(id);
     this.editMode = true;
   };
   @action cancelSelectedActivity = () => {
-    this.selectedActivity = undefined;
+    this.activity = null;
   };
   @action cancelFormOpen = () => {
     this.editMode = false;
@@ -115,6 +115,34 @@ export class ActivityStore {
         console.log(error);
     }    
   };
+  @action loadActivity = async (id: string) => {
+    let activity = this.getActivity(id);
+    if(activity) {
+      this.activity= activity;
+    }
+    else{
+      this.loadingInitial = true;
+      try {
+        activity = await agent.Activities.detail(id);
+        runInAction(() => {
+          this.activity = activity;
+          this.loadingInitial = false;
+        })
+      } catch (error) {
+        runInAction(() => {
+          this.loadingInitial = false;
+        })
+        console.log(error);
+      }
+    }
+  }
+
+  getActivity = (id: string) => {
+    return this.activityRegistry.get(id);
+  }
+  @action clearActivity = () => {
+    this.activity = null;
+  }
 }
 
 export default createContext(new ActivityStore());
