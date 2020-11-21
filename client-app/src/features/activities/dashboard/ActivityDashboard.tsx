@@ -1,13 +1,18 @@
 import { observer } from "mobx-react-lite";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Grid } from "semantic-ui-react";
+import { LoadingComponent } from "../../../app/layout/LoadingComponent";
 import  ActivityStore  from "../../../app/stores/activityStore";
 import  ActivityList  from "./ActivityList";
 
-
-export const ActivityDashboard: React.FC= () => {
+const ActivityDashboard: React.FC= () => {
   const activityStore = useContext(ActivityStore);
-  const {editMode, activity} = activityStore;
+  useEffect(() => {
+    activityStore.loadActivities();
+  }, [activityStore]);
+
+  if(activityStore.loadingInitial) return <LoadingComponent content="Loading activities..."/>;
+  //ensure use effect run one time only with second parameter
   return (
     <Grid>
       <Grid.Column width={10}>
