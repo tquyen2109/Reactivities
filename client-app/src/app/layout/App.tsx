@@ -20,13 +20,18 @@ const App: React.FC<RouteComponentProps> = ({location}) => {
   //ensure use effect run one time only with second parameter
   return (
     <Fragment>
-      <NavBar />
-      <Container style={{ marginTop: "7em" }}>
-        <Route exact path='/' component={HomePage}/>
-        <Route exact path='/activities' component={ActivityDashboard}/>
-        <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm}/>
-        <Route path='/activities/:id' component={ActivityDetails}/>
-      </Container>
+      <Route exact path='/' component={HomePage}/>
+      <Route path={'/(.+)'} render={() => (
+        <Fragment>
+        <NavBar />
+        <Container style={{ marginTop: "7em" }}>        
+          <Route exact path='/activities' component={ActivityDashboard}/>
+          <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm}/>
+          <Route path='/activities/:id' component={ActivityDetails}/>
+        </Container>
+        </Fragment>      
+      )}/>
+      
     </Fragment>
   );
 };
