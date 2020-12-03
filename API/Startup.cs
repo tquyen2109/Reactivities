@@ -3,6 +3,7 @@ using System.Text;
 using API.Middleware;
 using Application.Activities;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
@@ -41,6 +42,7 @@ namespace API
             });
             services.AddDbContext<DataContext>(opt =>
             {
+                opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
@@ -67,6 +69,7 @@ namespace API
                 };
             });
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddAutoMapper(typeof(List.Handler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
