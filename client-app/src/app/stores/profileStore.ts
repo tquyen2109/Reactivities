@@ -94,4 +94,26 @@ export default class ProfileStore {
             })
         }
     }
+    @action updateProfile = async (profile: IProfile) => {
+        this.loading = true;
+        try {
+            if(!profile.bio)
+            {
+                profile.bio = "";
+            }
+            await agent.Profile.updateProfile(profile);
+            runInAction(() => {
+                this.profile!.displayName = profile.displayName;
+                this.profile!.bio = profile.bio;
+                this.rootStore.userStore.user!.displayName = profile.displayName;
+                this.loading=false;
+            })
+        } catch (error) {
+             toast.error('Problem updating the profile');
+             console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
 }
